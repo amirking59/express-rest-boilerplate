@@ -6,8 +6,6 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 
-const multer = require('./tools/multer');
-
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
@@ -15,10 +13,9 @@ const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(multer());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 app.use(cors({ origin: '*' }));
 app.use(compression());

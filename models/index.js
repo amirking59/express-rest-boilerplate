@@ -1,9 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const dbConfig = require('../config/db');
 
-const sequelize = new Sequelize(dbConfig.DATABASE, dbConfig.USER, dbConfig.PASSWORD, {
-    host: dbConfig.HOST,
-    dialect: dbConfig.dialect,
+const sequelize = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
+    host: process.env.HOST,
+    dialect: process.env.dialect,
     logging: false,
     dialectOptions: { connectTimeout: 15000 },
     pool: {
