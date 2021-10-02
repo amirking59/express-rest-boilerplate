@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./bin/www",
     "dev": "cross-env DEBUG=* nodemon ./bin/www",
-    "test": "mocha"
+    "test": "mocha --recursive --exit"
   },
   "dependencies": {
     "compression": "^1.7.4",
