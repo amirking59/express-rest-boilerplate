@@ -1,7 +1,18 @@
 const app = require('../app')
+const db = require('../models')
 const supertest = require('supertest')
 const { expect } = require('chai')
 const debug  = require('debug')('test')
+
+describe('database', function () {
+    it('should connect to database correctly',  function (done) {
+        db.sequelize
+            .authenticate()
+            .then(() => {
+                done()
+            })
+    })
+})
 
 describe('index api', function () {
     describe('GET /', function () {

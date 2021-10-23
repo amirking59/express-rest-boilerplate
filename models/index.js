@@ -1,16 +1,20 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
-    host: process.env.HOST,
-    dialect: process.env.dialect,
-    logging: false,
-    dialectOptions: { connectTimeout: 15000 },
+const config = require('../config/config.json')[process.env.NODE_ENV || 'development'];
+
+const db = {};
+
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+db.types = DataTypes;
+db.User = require('./user')(sequelize, Sequelize, DataTypes);
+
+Object.keys(db).forEach((modelName) => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
 });
 
-const sql = Object.create(null);
-
-sql.sequelize = sequelize;
-sql.Sequelize = Sequelize;
-sql.types = DataTypes;
-
-module.exports = sql;
+module.exports = db;
