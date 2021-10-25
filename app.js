@@ -3,13 +3,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const compression = require('compression');
 const session = require('express-session');
 const sqlSession = require('express-mysql-session')(session);
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const userRouter = require('./routes/user');
 
 const app = express();
 
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use(helmet());
+// app.use(helmet());
 app.use(cors({ origin: '*' }));
 app.use(compression());
 app.use(session({
@@ -43,6 +43,11 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/v1/user', userRouter);
+
+app.use((req, res) => res.status(404).json({
+    errors: ['not found'],
+    msg: '',
+}));
 
 module.exports = app;
