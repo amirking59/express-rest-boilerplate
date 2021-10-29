@@ -1,11 +1,17 @@
-const Joi = require('joi');
+const joi = require('joi');
 
-const userRegisterSchema = Joi.object({
-    username: Joi.string().min(6).required(),
-    password: Joi.string().min(6).required(),
-    email: Joi.string().email().required(),
+const userRegisterSchema = joi.object({
+    username: joi.string().min(6).required(),
+    password: joi.string().min(6).required(),
+    email: joi.string().email().required(),
+});
+
+const userLoginSchema = joi.object({
+    username: joi.string().min(6).required(),
+    password: joi.string().min(6).required(),
 });
 
 module.exports = {
     userRegister: userRegisterSchema,
+    userLogin: userLoginSchema,
 };
